@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <context:component-scan base-package="demo" use-default-filters="true">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <context:property-placeholder ignore-unresolvable="true" file-encoding="utf-8" location="classpath*:dubboConfig.properties" />
+
+
+    <dubbo:application name="dubbo-demo-service" />
+    <dubbo:registry address="${dubbo.registry.address}" />
+    <dubbo:protocol name="dubbo" port="${dubbo.protocol.port}" threads="200" />
+    <dubbo:monitor protocol="registry" />
+
+    <!-- 服务提供 -->
+    <dubbo:provider id="dubbo-service"
+                    timeout="30000"
+                    loadbalance="leastactive"
+                    retries="0"
+                    executes="200"
+                    group="dubbo.server"
+                    version="1.0.0.0"/>
+    <bean id = "demoService" class="demo.dubbo.service.DemoServiceImpl"/>
+    <dubbo:service interface="demo.dubbo.service.DemoService" ref="demoService" provider="dubbo-service"/>
+
+    <!-- 消费服务  -->
+    <dubbo:consumer id="dubbo-api-demo"
+                    check="false"
+                    timeout="30000"
+                    loadbalance="leastactive"
+                    retries="0"
+                    validation="true"
+                    group="dubbo-api-demo"
+                    version="1.0.0.0" />
+    <dubbo:reference id="providerService" interface="demo.dubbo.service.ProviderService" consumer="dubbo-api-demo"/>
+</beans>
