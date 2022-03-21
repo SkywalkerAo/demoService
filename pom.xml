@@ -98,7 +98,7 @@
     <properties>
         <spring.version>4.2.6.RELEASE</spring.version>
         <zookeeper.version>3.4.6</zookeeper.version>
-        <dubbo.version>2.5.6</dubbo.version>
+        <dubbo.version>2.6.9</dubbo.version>
         <spring.version>4.2.6.RELEASE</spring.version>
         <netty.version>4.0.9.Final</netty.version>
         <zkclient.version>0.3</zkclient.version>
