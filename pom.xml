@@ -96,7 +96,7 @@
     </dependencyManagement>
 
     <properties>
-        <spring.version>4.2.6.RELEASE</spring.version>
+        <spring.version>5.3.19</spring.version>
         <zookeeper.version>3.4.6</zookeeper.version>
         <dubbo.version>2.5.6</dubbo.version>
         <spring.version>4.2.6.RELEASE</spring.version>
